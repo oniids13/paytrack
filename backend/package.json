@@ -2,7 +2,11 @@
   "name": "backend",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "seed": "node scripts/seed.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -22,8 +26,5 @@
     "passport-google-oauth2": "^0.2.0",
     "passport-local": "^1.0.0",
     "uuid": "^13.0.0"
-  },
-  "devDependencies": {
-    "prisma": "^6.19.2"
   }
 }
