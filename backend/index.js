@@ -1,22 +1,56 @@
-import express from "express";
-import session from "express-session";
 import dotenv from "dotenv";
-import connectDB from "./config/db.js";
 
+// Load environment variables first, before any other imports
 dotenv.config();
+
+import express from "express";
+import connectDB from "./config/db.js";
+import passport from "./config/passport.js";
+import authRoutes from "./routes/auth.js";
 
 // Connect to MongoDB
 connectDB();
 
 const app = express();
 
+// Body parser middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Initialize Passport
+app.use(passport.initialize());
+
+// Routes
 app.get("/", (req, res) => {
-  res.send("Hello World");
+  res.json({
+    success: true,
+    message: "PayTrack API is running",
+  });
 });
 
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
+// Auth routes
+app.use("/api/auth", authRoutes);
+
+// 404 handler
+app.use((req, res) => {
+  res.status(404).json({
+    success: false,
+    message: "Route not found",
+  });
+});
+
+// Error handler
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({
+    success: false,
+    message: "Server error",
+    error: process.env.NODE_ENV === "development" ? err.message : undefined,
+  });
+});
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
