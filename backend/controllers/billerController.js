@@ -205,7 +205,7 @@ export const deleteBiller = async (req, res) => {
  */
 export const markAsPaid = async (req, res) => {
   try {
-    const { month, year } = req.body;
+    const { month, year } = req.body || {};
 
     const now = new Date();
     const targetMonth = month || now.getMonth() + 1;
@@ -263,7 +263,7 @@ export const markAsPaid = async (req, res) => {
  */
 export const markAsUnpaid = async (req, res) => {
   try {
-    const { month, year } = req.body;
+    const { month, year } = req.body || {};
 
     const now = new Date();
     const targetMonth = month || now.getMonth() + 1;

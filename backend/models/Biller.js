@@ -92,11 +92,10 @@ const billerSchema = new mongoose.Schema(
 );
 
 // Validation: cutOffDate is required for credit type
-billerSchema.pre("validate", function (next) {
+billerSchema.pre("validate", function () {
   if (this.type === "credit" && !this.cutOffDate) {
     this.invalidate("cutOffDate", "Cut-off date is required for credit cards");
   }
-  next();
 });
 
 // Method to check if paid for a specific month
