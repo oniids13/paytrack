@@ -7,6 +7,8 @@ import express from "express";
 import connectDB from "./config/db.js";
 import passport from "./config/passport.js";
 import authRoutes from "./routes/auth.js";
+import billerRoutes from "./routes/billers.js";
+import dashboardRoutes from "./routes/dashboard.js";
 
 // Connect to MongoDB
 connectDB();
@@ -30,6 +32,12 @@ app.get("/", (req, res) => {
 
 // Auth routes
 app.use("/api/auth", authRoutes);
+
+// Biller routes
+app.use("/api/billers", billerRoutes);
+
+// Dashboard routes
+app.use("/api/dashboard", dashboardRoutes);
 
 // 404 handler
 app.use((req, res) => {
